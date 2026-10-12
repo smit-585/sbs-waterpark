@@ -21,6 +21,15 @@ app.use(cors({
 }));
 app.use(express.json({ limit: '1mb' }));
 
+// Health Check Routes
+app.get('/', (req, res) => {
+    res.json({ status: 'ok', message: 'SBS Waterpark API is active', health: '/api/health' });
+});
+
+app.get('/api/health', (req, res) => {
+    res.json({ status: 'ok', uptime: process.uptime(), timestamp: new Date().toISOString() });
+});
+
 // Routes
 app.use('/api/enquiries', enquiryRoutes);
 
