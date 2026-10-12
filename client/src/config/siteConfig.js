@@ -11,5 +11,5 @@ export const siteConfig = {
   address: 'Pulgaon, Wardha District, Maharashtra, India',
   mapsUrl: 'https://maps.app.goo.gl/UEGQasKHPbP8dd8H6?g_st=iw',
   timings: '11:00 AM – 4:00 PM',
-  apiUrl: '/api',
+  apiUrl: (import.meta.env.VITE_API_URL || '/api').replace(/\/+$/, ''),
 };

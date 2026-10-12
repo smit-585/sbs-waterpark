@@ -11,8 +11,13 @@ const app = express();
 
 // Middleware
 app.use(helmet());
+const rawOrigin = process.env.FRONTEND_URL || process.env.CORS_ORIGIN || '*';
+const allowedOrigins = rawOrigin.includes(',') 
+    ? rawOrigin.split(',').map(o => o.trim()) 
+    : rawOrigin;
+
 app.use(cors({
-    origin: process.env.CORS_ORIGIN || '*'
+    origin: allowedOrigins === '*' ? '*' : allowedOrigins
 }));
 app.use(express.json({ limit: '1mb' }));
 
