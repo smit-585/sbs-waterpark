@@ -26,16 +26,18 @@ app.get('/', (req, res) => {
     res.json({ status: 'ok', message: 'SBS Waterpark API is active', health: '/api/health' });
 });
 
-app.get('/api/health', (req, res) => {
+app.get(['/health', '/api/health'], (req, res) => {
     res.json({ status: 'ok', uptime: process.uptime(), timestamp: new Date().toISOString() });
 });
 
-// Routes
+// Routes - support both with and without /api prefix
 app.use('/api/enquiries', enquiryRoutes);
+app.use('/enquiries', enquiryRoutes);
 
 // 404 Handler
 app.use((req, res, next) => {
-    res.status(404).json({ success: false, message: 'Route not found' });
+    console.warn(`[404] Route not found: ${req.method} ${req.originalUrl}`);
+    res.status(404).json({ success: false, message: `Route not found: ${req.method} ${req.originalUrl}` });
 });
 
 // Global Error Handler

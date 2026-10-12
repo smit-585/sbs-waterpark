@@ -13,6 +13,7 @@ export const siteConfig = {
   timings: '11:00 AM – 4:00 PM',
   apiUrl: (() => {
     let url = (import.meta.env.VITE_API_URL || '/api').trim().replace(/\/+$/, '');
+    url = url.replace(/\/enquiries$/, '');
     if (url.startsWith('http') && !url.endsWith('/api')) {
       url = `${url}/api`;
     }
